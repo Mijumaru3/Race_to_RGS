@@ -31,7 +31,7 @@ public class ChangeMat : MonoBehaviour {
 			col.enabled = false; //disable block's collider
 			col.enabled = true; //then re-enable block's collider to make changes take effect
 
-			Destroy(obj.gameObject);
+			Destroy(obj.gameObject); //destroy the object that collided with the platform
 		}
 	}
 }
