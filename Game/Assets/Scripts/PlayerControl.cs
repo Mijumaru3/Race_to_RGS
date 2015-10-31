@@ -12,12 +12,15 @@ public class PlayerControl : MonoBehaviour {
 	//private variables
 	Rigidbody2D rb; //rigidbody of the player
 	float horiz = 0f; //the value of the horizontal axis
-	bool jump = false; //whether the player is jumping or not 
+	bool jump = false; //whether the player is jumping or not
+	int numJumps= 0; //how many jumps the player is allowed to have
 	bool left = false; //whether the player is facing left or not
+	Vector3 startPosition; //stores the starting position of the ball
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody2D> (); //get reference to the rigidbody of the player
+		startPosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -53,8 +56,9 @@ public class PlayerControl : MonoBehaviour {
 	void FixedUpdate()
 	{
 		//jump
-		if (jump == true) {
+		if (jump == true && numJumps == 0) {
 			rb.AddForce(new Vector2(0f, jumpForce)); //if jump is true then add a force in the y direction to the player
+			numJumps++;
 			jump = false; //set jump to false so that not continuously adding the upward force
 		}
 
@@ -63,6 +67,17 @@ public class PlayerControl : MonoBehaviour {
 		if (Mathf.Abs (rb.velocity.x) > maxSpeed)  //if the player's speed is more than the maximum speed:
 		{
 			rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //set the speed back to the maximum
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.gameObject.tag == "Killzone") {
+			transform.position = startPosition;
+		}
+
+		if (col.gameObject.tag == "block") {
+			numJumps = 0;
 		}
 	}
 
