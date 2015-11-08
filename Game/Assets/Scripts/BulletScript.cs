@@ -3,6 +3,13 @@ using System.Collections;
 
 public class BulletScript : MonoBehaviour {
 
+	/*For materials array:
+	 * 0 = rubber
+	 * 1 = ice
+	 * 2 = sponge
+	 * 3 = water
+	 */
+	
 	//public variables
 	public static bool left; //determines whether or not the bullet should move left;
 							//public static used to change the variable in from another script

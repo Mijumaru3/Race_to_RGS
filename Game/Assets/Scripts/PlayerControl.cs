@@ -3,11 +3,14 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
+
 	//public variables
 	public float speed; //speed of the player
 	public float maxSpeed = 5f; //maximum speed of the player
 	public float jumpForce; //contorls how high the player will jump
 	public GameObject[] projectiles; //array of what the player can shoot
+
+	public int health = 100; //amount of health the player has
 
 	//private variables
 	Rigidbody2D rb; //rigidbody of the player
@@ -114,5 +117,12 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		Instantiate (projectiles[0], spawnPosition, Quaternion.identity);  //spawn the bullet
+	}
+
+	//public function - can be called from other objects
+	//decreases the health of the player by however much damage is given as an argument to the function
+	public void decreaseHealth(int damage)
+	{
+		health -= damage;
 	}
 }
