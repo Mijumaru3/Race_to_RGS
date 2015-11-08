@@ -3,6 +3,13 @@ using System.Collections;
 
 public class ChangeMat : MonoBehaviour {
 
+	/*For materials array:
+	 * 0 = rubber
+	 * 1 = ice
+	 * 2 = sponge
+	 * 3 = water
+	 */
+
 	//public variables
 	public PhysicsMaterial2D[] mats; //array of materials of the block
 
