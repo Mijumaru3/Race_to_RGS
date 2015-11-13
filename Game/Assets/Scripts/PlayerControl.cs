@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour {
 	public float speed; //speed of the player
 	public float maxSpeed = 5f; //maximum speed of the player
 	public float jumpForce; //contorls how high the player will jump
+	public float bulletSpeed = 4f;
 	public GameObject[] projectiles; //array of what the player can shoot
 
 	public int health = 100; //amount of health the player has
@@ -20,7 +21,7 @@ public class PlayerControl : MonoBehaviour {
 	int numJumps= 0; //how many jumps the player is allowed to have
 	int proj_num = 0; //decides which projectile to shoot from the array
 
-	bool left = false; //whether the player is facing left or not
+//	bool left = false; //whether the player is facing left or not
 	Vector3 startPosition; //stores the starting position of the ball
 
 	//===================================================================================================================================
@@ -35,13 +36,13 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		//-------------------------------------------------------------------------------------------------------------------------------
 		//Stuff to do with shooting
-		//if right mouse button is pressed - call Fire function to fire bullet
-		if (Input.GetMouseButtonDown(1)) {
-			Fire ();
+		//if left mouse button is pressed - call Fire function to fire bullet
+		if (Input.GetMouseButtonDown(0)) {
+			Shoot();
 		}
 
-		//goes through the bullets in the array every time the left mouse button is pressed
-		if (Input.GetMouseButtonDown (0)) {
+		//goes through the bullets in the array every time the right mouse button is pressed
+		if (Input.GetMouseButtonDown (1)) {
 			proj_num++;
 			if(proj_num >= projectiles.Length) //if the proj_numb is more than or equal to the length of the projectiles array
 			{
@@ -59,6 +60,7 @@ public class PlayerControl : MonoBehaviour {
 			jump = true;
 		}
 
+		/*
 		//determine if character is facing left or right
 		//if the left arrow or a is pressed then the player is going left - so left is true
 		if (Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A)) {
@@ -68,7 +70,7 @@ public class PlayerControl : MonoBehaviour {
 		//if the right arrow or d is pressed then the player is going right - so left is false
 		if (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
 			left = false;
-		}
+		}*/
 	}
 
 	//used fixed update for changes to physics
@@ -105,18 +107,15 @@ public class PlayerControl : MonoBehaviour {
 	//========================================================================================================================================
 	//custom functions
 	//private function by default
-	void Fire()
-	{	
-		BulletScript.left = left;  //set the left variable for bullets so they shoot in right direction
-		Vector3 spawnPosition = this.transform.position;  //set the spawn position for the bullet
-		if (left) {
-			spawnPosition.x -= 0.1f;
-		}
-		else {
-			spawnPosition.x += 0.1f;
-		}
-
-		Instantiate (projectiles[0], spawnPosition, Quaternion.identity);  //spawn the bullet
+	void Shoot()
+	{
+		Vector3 direction = Input.mousePosition;
+		direction.z = 0.0f;
+		direction = Camera.main.ScreenToWorldPoint (direction);
+		Vector3 playerPos = new Vector3 (transform.position.x + (direction.x / 10), transform.position.y + (direction.y / 10), transform.position.z);
+		direction = direction - transform.position;
+		GameObject bul = (GameObject) Instantiate (projectiles [proj_num], playerPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
+		bul.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x * bulletSpeed, direction.y * bulletSpeed);
 	}
 
 	//public function - can be called from other objects
