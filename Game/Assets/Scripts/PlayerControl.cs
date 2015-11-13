@@ -36,18 +36,10 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		//-------------------------------------------------------------------------------------------------------------------------------
 		//Stuff to do with shooting
-<<<<<<< HEAD
 		//if left mouse button is pressed - call Fire function to fire bullet
-		if (Input.GetMouseButtonDown(0)) {
-			Shoot();
-=======
-		//if left mouse button is pressed - fire bullet
-		if (Input.GetMouseButtonDown(0)) {
-			Fire (); // delete this function
-			//code to fire bullet towards mouse
->>>>>>> master
+		if (Input.GetMouseButtonDown (0)) {
+			Shoot ();
 		}
-
 		//goes through the bullets in the array every time the right mouse button is pressed
 		if (Input.GetMouseButtonDown (1)) {
 			proj_num++;
