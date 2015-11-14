@@ -108,7 +108,6 @@ public class PlayerControl : MonoBehaviour {
 	//private function by default
 	void Shoot()
 	{
-		/*
 		Vector3 direction = Input.mousePosition;
 		direction.z = 0.0f;
 		direction = Camera.main.ScreenToWorldPoint (direction);
@@ -116,14 +115,6 @@ public class PlayerControl : MonoBehaviour {
 		direction = direction - transform.position;
 		GameObject bul = (GameObject) Instantiate (projectiles [proj_num], playerPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
 		bul.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x * bulletSpeed, direction.y * bulletSpeed);
-		*/
-		Vector2 direction;
-		Ray r = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit2D hit;
-		if(Physics.Raycast(r, out hit, 100))
-		{
-			direction = hit.point;
-		}
 	}
 
 	//public function - can be called from other objects
