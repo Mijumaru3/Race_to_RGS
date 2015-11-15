@@ -11,15 +11,15 @@ public class PlayerControl : MonoBehaviour {
 	public float bulletSpeed = 4f;
 	public GameObject[] projectiles; //array of what the player can shoot
 
-	public int health = 100; //amount of health the player has
-
 	//private variables
+	GameControl gc;
 	Rigidbody2D rb; //rigidbody of the player
 	float horiz = 0f; //the value of the horizontal axis
 
 	bool jump = false; //whether the player is jumping or not
 	int numJumps= 0; //how many jumps the player is allowed to have
 	int proj_num = 0; //decides which projectile to shoot from the array
+	float currentHealth;
 
 //	bool left = false; //whether the player is facing left or not
 	Vector3 startPosition; //stores the starting position of the ball
@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
 	//Unity Functions
 	// Use this for initialization
 	void Start () {
+		gc = GameObject.Find ("GameController").GetComponent<GameControl> ();
 		rb = GetComponent<Rigidbody2D> (); //get reference to the rigidbody of the player
 		startPosition = transform.position;
 	}
@@ -101,6 +102,10 @@ public class PlayerControl : MonoBehaviour {
 		if (col.gameObject.tag == "block") {
 			numJumps = 0;
 		}
+
+		if (col.gameObject.tag == "Switch") {
+			gc.turnOn();
+		}
 	}
 
 	//========================================================================================================================================
@@ -108,27 +113,11 @@ public class PlayerControl : MonoBehaviour {
 	//private function by default
 	void Shoot()
 	{
-		/*
-		Vector3 direction = Input.mousePosition;
-		direction.z = 0.0f;
-		direction = Camera.main.ScreenToWorldPoint (direction);
-		Vector3 playerPos = new Vector3 (transform.position.x + (direction.x / 10), transform.position.y + (direction.y / 10), transform.position.z);
-		direction = direction - transform.position;
-		GameObject bul = (GameObject) Instantiate (projectiles [proj_num], playerPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
-		bul.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x * bulletSpeed, direction.y * bulletSpeed);
-		*/
 		Vector3 target = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Vector3 direction = target - transform.position;
 		direction.Normalize ();
-		Vector3 playerPos = new Vector3 (transform.position.x + (direction.x / 8), transform.position.y + (direction.y / 8), transform.position.z);
+		Vector3 playerPos = new Vector3 (transform.position.x + (direction.x), transform.position.y + (direction.y), transform.position.z);
 		GameObject bullet = (GameObject)Instantiate (projectiles [proj_num], playerPos, Quaternion.identity);
 		bullet.GetComponent<Rigidbody2D> ().velocity = direction * bulletSpeed;
-	}
-
-	//public function - can be called from other objects
-	//decreases the health of the player by however much damage is given as an argument to the function
-	public void decreaseHealth(int damage)
-	{
-		health -= damage;
 	}
 }
