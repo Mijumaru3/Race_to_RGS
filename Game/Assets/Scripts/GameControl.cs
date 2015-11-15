@@ -7,8 +7,12 @@ public class GameControl : MonoBehaviour {
 	public Light playerLight;
 	public Light mainLight;
 	public GameObject platform;
+	public int score = 100000;
+
+	public PauseScript ps;
 
 	//private variables
+	float timer = 0.0f;
 
 	//=============================================================================================================
 	//Unity provided functions
@@ -21,6 +25,14 @@ public class GameControl : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.L))
 			turnOn ();
+
+		if (timer < 5.0f) {
+			timer += Time.deltaTime;
+		}
+		else {
+			score -= 1;
+			timer = 0.0f;
+		}
 	}
 
 	//============================================================================================================
@@ -30,5 +42,10 @@ public class GameControl : MonoBehaviour {
 		playerLight.enabled = false;
 		mainLight.intensity = 1;
 		platform.SetActive (true);
+	}
+
+	public void Pause()
+	{
+		ps.paused = true;
 	}
 }
