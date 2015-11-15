@@ -27,6 +27,8 @@ public class PauseScript : MonoBehaviour {
 			Time.timeScale = 0f;
 		}
 		else {
+			cInfo.SetActive(false);
+			cInfo_background.SetActive(false);
 			pauseMenu_canvas.SetActive(false);
 			Time.timeScale = 1f;
 		}
