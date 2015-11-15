@@ -108,6 +108,7 @@ public class PlayerControl : MonoBehaviour {
 	//private function by default
 	void Shoot()
 	{
+		/*
 		Vector3 direction = Input.mousePosition;
 		direction.z = 0.0f;
 		direction = Camera.main.ScreenToWorldPoint (direction);
@@ -115,6 +116,13 @@ public class PlayerControl : MonoBehaviour {
 		direction = direction - transform.position;
 		GameObject bul = (GameObject) Instantiate (projectiles [proj_num], playerPos, Quaternion.Euler (new Vector3 (0, 0, 0)));
 		bul.GetComponent<Rigidbody2D>().velocity = new Vector2 (direction.x * bulletSpeed, direction.y * bulletSpeed);
+		*/
+		Vector3 target = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		Vector3 direction = target - transform.position;
+		direction.Normalize ();
+		Vector3 playerPos = new Vector3 (transform.position.x + (direction.x / 8), transform.position.y + (direction.y / 8), transform.position.z);
+		GameObject bullet = (GameObject)Instantiate (projectiles [proj_num], playerPos, Quaternion.identity);
+		bullet.GetComponent<Rigidbody2D> ().velocity = direction * bulletSpeed;
 	}
 
 	//public function - can be called from other objects
