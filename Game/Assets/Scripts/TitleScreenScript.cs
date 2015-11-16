@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TitleScreenScript : MonoBehaviour {
 
 	//public variables
-	public GameObject infoMenuCanvas;
+	public GameObject controlMenuCanvas;
+	public GameObject storyMenuCanvas;
+
 	public string firstLevel;
 
 	//private variables
 	bool bringUpInfo = false;
+	bool storyInfo = true;
 
 	// Use this for initialization
 	void Start () {
@@ -23,10 +27,20 @@ public class TitleScreenScript : MonoBehaviour {
 		}
 
 		if (bringUpInfo) {
-			infoMenuCanvas.SetActive (true);
+			if(storyInfo)
+			{
+				controlMenuCanvas.SetActive(false);
+				storyMenuCanvas.SetActive(true);
+			}
+			else {
+				storyMenuCanvas.SetActive(false);
+				controlMenuCanvas.SetActive(true);
+			}
 		}
 		else {
-			infoMenuCanvas.SetActive(false);
+			controlMenuCanvas.SetActive(false);
+			storyMenuCanvas.SetActive(false);
+			storyInfo = true;
 		}
 	}
 
@@ -44,4 +58,15 @@ public class TitleScreenScript : MonoBehaviour {
 	{
 		Application.Quit ();
 	}
+
+	public void NextPage()
+	{
+		storyInfo = false;
+	}
+
+	public void PrevPage()
+	{
+		storyInfo = true;
+	}
+
 }
