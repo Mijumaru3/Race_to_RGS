@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -48,6 +49,8 @@ public class PlayerControl : MonoBehaviour {
 			{
 				proj_num = 0;  //then reset the proj_num to the beginning of the array
 			}
+
+			gc.changeBullet(projectiles.Length, proj_num);
 		}
 
 		//---------------------------------------------------------------------------------------------------------------------------------
@@ -120,4 +123,5 @@ public class PlayerControl : MonoBehaviour {
 		GameObject bullet = (GameObject)Instantiate (projectiles [proj_num], playerPos, Quaternion.identity);
 		bullet.GetComponent<Rigidbody2D> ().velocity = direction * bulletSpeed;
 	}
+	
 }
