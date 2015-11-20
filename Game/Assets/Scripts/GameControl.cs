@@ -40,7 +40,7 @@ public class GameControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (timer < 2.0f) {
+		if (timer < 1.0f) {
 			timer += Time.deltaTime;
 		}
 		else {

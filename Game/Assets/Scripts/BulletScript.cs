@@ -25,10 +25,6 @@ public class BulletScript : MonoBehaviour {
 		if (col.gameObject.tag == "Killzone") {
 			Destroy(gameObject);
 		}
-		if(type == 3 && col.gameObject.tag == "block")
-		{
-			Destroy(gameObject);
-		}
 	}
 
 	//public function - can be accessed by another script
