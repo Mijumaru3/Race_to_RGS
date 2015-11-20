@@ -5,11 +5,21 @@ using UnityEngine.UI;
 public class GameControl : MonoBehaviour {
 
 	//public variables
+	public GameObject startPosition;
+	public GameObject deathParticles;
+	public float respawnDelay = 1f;
+
 	public Light playerLight;
 	public Light mainLight;
 	public GameObject platform;
+	public GameObject closedDoors;
+	public GameObject openDoors;
 
 	public GameObject endCanvas;
+
+	public Camera levelCam;
+	public Camera playerCam;
+
 	public Text lostText;
 	public Text winText;
 	public Text scoreText;
@@ -25,12 +35,14 @@ public class GameControl : MonoBehaviour {
 
 	public Image[] proj_Images; //array of the projectile images
 
-
 	//private variables
 	float timer = 0.0f;
+	float camTimer = 0.0f;
 	float currentHealth;
 	bool win = false;
 	bool lose = false;
+
+	PlayerControl player;
 
 	//=============================================================================================================
 	//Unity provided functions
@@ -48,10 +60,23 @@ public class GameControl : MonoBehaviour {
 		}
 
 		endCanvas.SetActive(false);
+		openDoors.SetActive(false);
+		levelCam.enabled = false;
+		player = GameObject.FindWithTag("Player").GetComponent<PlayerControl>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(levelCam.enabled == true && camTimer < 2.5f)
+		{
+			camTimer += Time.deltaTime;
+		}
+		else if(levelCam.enabled == true && camTimer >= 2.5f)
+		{
+			playerCam.enabled = true;
+			levelCam.enabled = false;
+		}
+
 		if (timer < 1.0f) {
 			timer += Time.deltaTime;
 		}
@@ -100,6 +125,10 @@ public class GameControl : MonoBehaviour {
 		playerLight.enabled = false;
 		mainLight.intensity = 1;
 		platform.SetActive (true);
+		closedDoors.SetActive(false);
+		openDoors.SetActive(true);
+		playerCam.enabled = false;
+		levelCam.enabled = true;
 	}
 
 	public void Pause()
@@ -138,5 +167,21 @@ public class GameControl : MonoBehaviour {
 	public void reachDoors()
 	{
 		win = true;
+	}
+
+	public IEnumerator Respawn_Coroutine()
+	{
+		Instantiate(deathParticles, player.transform.position, player.transform.rotation);
+		player.enabled = false;
+		player.GetComponent<Renderer>().enabled = false;
+		yield return new WaitForSeconds(respawnDelay);
+		player.transform.position = startPosition.transform.position;
+		player.enabled = true;
+		player.GetComponent<Renderer>().enabled = true;
+	}
+
+	public void Respawn()
+	{
+		StartCoroutine("Respawn_Coroutine");
 	}
 }
