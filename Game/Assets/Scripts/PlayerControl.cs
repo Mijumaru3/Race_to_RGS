@@ -12,6 +12,11 @@ public class PlayerControl : MonoBehaviour {
 	public float bulletSpeed = 4f;
 	public GameObject[] projectiles; //array of what the player can shoot
 
+	public float knockbackTime;
+	public float knockbackForce;
+	public float knockbackCount;
+	public bool knockbackFromRight;
+
 	//private variables
 	GameControl gc;
 	Rigidbody2D rb; //rigidbody of the player
@@ -23,7 +28,6 @@ public class PlayerControl : MonoBehaviour {
 	float currentHealth;
 
 //	bool left = false; //whether the player is facing left or not
-	Vector3 startPosition; //stores the starting position of the ball
 
 	//===================================================================================================================================
 	//Unity Functions
@@ -31,7 +35,6 @@ public class PlayerControl : MonoBehaviour {
 	void Start () {
 		gc = GameObject.Find ("GameController").GetComponent<GameControl> ();
 		rb = GetComponent<Rigidbody2D> (); //get reference to the rigidbody of the player
-		startPosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -67,18 +70,33 @@ public class PlayerControl : MonoBehaviour {
 	//used fixed update for changes to physics
 	void FixedUpdate()
 	{
-		//jump
-		if (jump == true && numJumps == 0) {
-			rb.AddForce(new Vector2(0f, jumpForce)); //if jump is true then add a force in the y direction to the player
-			numJumps++;
-			jump = false; //set jump to false so that not continuously adding the upward force
-		}
-
-		//general moving
-		rb.AddForce (Vector2.right * horiz * speed); //add a force to the player in the x direction
-		if (Mathf.Abs (rb.velocity.x) > maxSpeed)  //if the player's speed is more than the maximum speed:
+		if(knockbackCount <= 0)
 		{
-			rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //set the speed back to the maximum
+			//jump
+			if (jump == true && numJumps == 0) {
+				rb.AddForce(new Vector2(0f, jumpForce)); //if jump is true then add a force in the y direction to the player
+				numJumps++;
+				jump = false; //set jump to false so that not continuously adding the upward force
+			}
+			
+			//general moving
+			rb.AddForce (Vector2.right * horiz * speed); //add a force to the player in the x direction
+			if (Mathf.Abs (rb.velocity.x) > maxSpeed)  //if the player's speed is more than the maximum speed:
+			{
+				rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //set the speed back to the maximum
+			}
+		}
+		else
+		{
+			if(knockbackFromRight)
+			{
+				rb.velocity = new Vector2(-knockbackForce, 1f);
+			}
+			else
+			{
+				rb.velocity = new Vector2(knockbackForce, 1f);
+			}
+			knockbackCount -= Time.deltaTime;
 		}
 	}
 
@@ -86,7 +104,7 @@ public class PlayerControl : MonoBehaviour {
 	{
 		//if the player hits the killzone then bring it back to the beginning position
 		if (col.gameObject.tag == "Killzone") {
-			transform.position = startPosition;
+			gc.Respawn();
 			gc.changeHealth(10);
 		}
 
@@ -103,12 +121,6 @@ public class PlayerControl : MonoBehaviour {
 		{
 			gc.reachDoors();
 		}
-
-		if(col.gameObject.tag == "Enemy")
-		{
-			rb.AddForce(new Vector2(-(rb.velocity.x * 900f), 0f));
-			gc.changeHealth(10);
-		}
 	}
 
 	//========================================================================================================================================
@@ -123,5 +135,4 @@ public class PlayerControl : MonoBehaviour {
 		GameObject bullet = (GameObject)Instantiate (projectiles [proj_num], playerPos, Quaternion.identity);
 		bullet.GetComponent<Rigidbody2D> ().velocity = direction * bulletSpeed;
 	}
-	
 }
