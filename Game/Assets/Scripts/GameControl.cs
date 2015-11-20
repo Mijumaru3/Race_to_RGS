@@ -93,6 +93,7 @@ public class GameControl : MonoBehaviour {
 		scoreText.text = "Score: " + score;
 	}
 
+	//public functions
 	public void turnOn()
 	{
 		playerLight.intensity = 0;
@@ -126,6 +127,12 @@ public class GameControl : MonoBehaviour {
 				proj_Images[i].enabled = false;
 			}
 		}
+	}
+
+	public void incrementScore(int value)
+	{
+		score += value;
+		UpdateText();
 	}
 
 	public void reachDoors()

@@ -62,18 +62,6 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space)) {
 			jump = true;
 		}
-
-		/*
-		//determine if character is facing left or right
-		//if the left arrow or a is pressed then the player is going left - so left is true
-		if (Input.GetKeyDown (KeyCode.LeftArrow) || Input.GetKeyDown (KeyCode.A)) {
-			left = true;
-		}
-
-		//if the right arrow or d is pressed then the player is going right - so left is false
-		if (Input.GetKeyDown (KeyCode.RightArrow) || Input.GetKeyDown (KeyCode.D)) {
-			left = false;
-		}*/
 	}
 
 	//used fixed update for changes to physics
@@ -93,7 +81,7 @@ public class PlayerControl : MonoBehaviour {
 			rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y); //set the speed back to the maximum
 		}
 	}
-	
+
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		//if the player hits the killzone then bring it back to the beginning position
@@ -114,6 +102,12 @@ public class PlayerControl : MonoBehaviour {
 		if(col.gameObject.tag == "Doors")
 		{
 			gc.reachDoors();
+		}
+
+		if(col.gameObject.tag == "Enemy")
+		{
+			rb.AddForce(new Vector2(-(rb.velocity.x * 900f), 0f));
+			gc.changeHealth(10);
 		}
 	}
 
