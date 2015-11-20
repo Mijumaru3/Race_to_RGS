@@ -42,6 +42,7 @@ public class EnemyScript : MonoBehaviour {
 		{
 			int bulletType = col.gameObject.GetComponent<BulletScript>().Type();
 			Destroy(col.gameObject);
+			//rubber and ice enemeies can be destroyed with quicksand bullets
 			if((type == 0 && bulletType == 2) || (type == 1 && bulletType == 2))
 			{
 				controller.incrementScore(5);
