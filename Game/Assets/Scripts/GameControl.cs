@@ -80,6 +80,7 @@ public class GameControl : MonoBehaviour {
 				playerCam.enabled = true;
 				levelCam.enabled = false;
 				levelStart = false;
+                camTimer = 0.0f;
 			}
 		}
 
