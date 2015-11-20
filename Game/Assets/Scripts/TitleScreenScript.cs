@@ -7,12 +7,14 @@ public class TitleScreenScript : MonoBehaviour {
 	//public variables
 	public GameObject controlMenuCanvas;
 	public GameObject storyMenuCanvas;
+	public GameObject bulletInfoCanvas;
 
 	public string firstLevel;
 
 	//private variables
 	bool bringUpInfo = false;
 	bool storyInfo = true;
+	bool bulletInfo = false;
 
 	// Use this for initialization
 	void Start () {
@@ -35,10 +37,19 @@ public class TitleScreenScript : MonoBehaviour {
 			else {
 				storyMenuCanvas.SetActive(false);
 				controlMenuCanvas.SetActive(true);
+				if(bulletInfo)
+				{
+					bulletInfoCanvas.SetActive(true);
+				}
+				else
+				{
+					bulletInfoCanvas.SetActive(false);
+				}
 			}
 		}
 		else {
 			controlMenuCanvas.SetActive(false);
+			bulletInfoCanvas.SetActive(false);
 			storyMenuCanvas.SetActive(false);
 			storyInfo = true;
 		}
@@ -67,6 +78,11 @@ public class TitleScreenScript : MonoBehaviour {
 	public void PrevPage()
 	{
 		storyInfo = true;
+	}
+
+	public void ShowBulletInfo()
+	{
+		bulletInfo = !bulletInfo;
 	}
 
 }
