@@ -11,7 +11,7 @@ public class GameControl : MonoBehaviour {
 
 	public Light playerLight;
 	public Light mainLight;
-	public Light tempLight;
+	public Light switchLight;
 	public GameObject platform;
 	public GameObject closedDoors;
 	public GameObject openDoors;
@@ -63,7 +63,6 @@ public class GameControl : MonoBehaviour {
 
 		endCanvas.SetActive(false);
 		openDoors.SetActive(false);
-	//	levelCam.enabled = false;
 		playerCam.enabled = false;
 		player = GameObject.FindWithTag("Player").GetComponent<PlayerControl>();
 	}
@@ -72,26 +71,23 @@ public class GameControl : MonoBehaviour {
 	void Update () {
 		if(levelStart)
 		{
-			if(levelCam.enabled == true && camTimer < 2.5f)
+			if(levelCam.enabled == true && camTimer < 6.0f)
 			{
 				camTimer += Time.deltaTime;
 			}
-			else if(levelCam.enabled == true && camTimer >= 2.5f)
+			else if(levelCam.enabled == true && camTimer >= 6.0f)
 			{
 				playerCam.enabled = true;
 				levelCam.enabled = false;
 				levelStart = false;
-				tempLight.intensity = 0;
-				tempLight.enabled = false;
-                Destroy(tempLight);
 			}
 		}
 
-		if(levelCam.enabled == true && camTimer < 2.5f)
+		if(levelCam.enabled == true && camTimer < 5.0f)
 		{
 			camTimer += Time.deltaTime;
 		}
-		else if(levelCam.enabled == true && camTimer >= 2.5f)
+		else if(levelCam.enabled == true && camTimer >= 5.0f)
 		{
 			playerCam.enabled = true;
 			levelCam.enabled = false;
@@ -141,6 +137,7 @@ public class GameControl : MonoBehaviour {
 	//public functions
 	public void turnOn()
 	{
+		switchLight.enabled = false;
 		playerLight.intensity = 0;
 		playerLight.enabled = false;
 		mainLight.intensity = 1;
