@@ -83,6 +83,7 @@ public class GameControl : MonoBehaviour {
 				levelStart = false;
 				tempLight.intensity = 0;
 				tempLight.enabled = false;
+                Destroy(tempLight);
 			}
 		}
 
