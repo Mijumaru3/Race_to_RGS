@@ -9,18 +9,28 @@ public class GameControl : MonoBehaviour {
 	public Light mainLight;
 	public GameObject platform;
 
+	public GameObject endCanvas;
+	public Text lostText;
+	public Text winText;
 	public Text scoreText;
 	public int score = 100000;
 
 	public GameObject healthBar;
 	public float maxHealth = 100f; //amount of health the player has
-	public Image[] proj_Images; //array of the projectile images
 
 	public PauseScript ps;
 
+	public Image loseImage;
+	public Image winImage;
+
+	public Image[] proj_Images; //array of the projectile images
+
+
 	//private variables
 	float timer = 0.0f;
-	public float currentHealth;
+	float currentHealth;
+	bool win = false;
+	bool lose = false;
 
 	//=============================================================================================================
 	//Unity provided functions
@@ -36,6 +46,8 @@ public class GameControl : MonoBehaviour {
 		{
 			proj_Images[i].enabled = false;
 		}
+
+		endCanvas.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -47,6 +59,30 @@ public class GameControl : MonoBehaviour {
 			score -= 1;
 			UpdateText();
 			timer = 0.0f;
+		}
+
+		if(currentHealth <= 0)
+		{
+			lose = true;
+		}
+	
+		if(win)
+		{
+			Time.timeScale = 0f;
+			endCanvas.SetActive(true);
+			lostText.enabled = false;
+			loseImage.enabled = false;
+			winText.enabled = true;
+			winImage.enabled = true;
+		}
+		else if(lose)
+		{
+			Time.timeScale = 0f;
+			endCanvas.SetActive(true);
+			lostText.enabled = true;
+			loseImage.enabled = true;
+			winText.enabled = false;
+			winImage.enabled = false;
 		}
 	}
 
@@ -90,5 +126,10 @@ public class GameControl : MonoBehaviour {
 				proj_Images[i].enabled = false;
 			}
 		}
+	}
+
+	public void reachDoors()
+	{
+		win = true;
 	}
 }

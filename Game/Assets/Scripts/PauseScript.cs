@@ -56,12 +56,12 @@ public class PauseScript : MonoBehaviour {
 
 	public void Quit()
 	{
-		//Application.Quit ();
+		Application.Quit ();
 	}
 
 	public void ToStart()
 	{
-		//Application.LoadLevel(startScreen);
+		Application.LoadLevel(startScreen);
 	}
 
 	public void ControlInfo()

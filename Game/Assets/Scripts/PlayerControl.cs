@@ -99,6 +99,7 @@ public class PlayerControl : MonoBehaviour {
 		//if the player hits the killzone then bring it back to the beginning position
 		if (col.gameObject.tag == "Killzone") {
 			transform.position = startPosition;
+			gc.changeHealth(10);
 		}
 
 		//once the player lands numJumps is reset
@@ -108,6 +109,11 @@ public class PlayerControl : MonoBehaviour {
 
 		if (col.gameObject.tag == "Switch") {
 			gc.turnOn();
+		}
+
+		if(col.gameObject.tag == "Doors")
+		{
+			gc.reachDoors();
 		}
 	}
 
