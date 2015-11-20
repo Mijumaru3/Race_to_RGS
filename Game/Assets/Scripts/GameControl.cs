@@ -11,6 +11,7 @@ public class GameControl : MonoBehaviour {
 
 	public Light playerLight;
 	public Light mainLight;
+	public Light tempLight;
 	public GameObject platform;
 	public GameObject closedDoors;
 	public GameObject openDoors;
@@ -41,6 +42,7 @@ public class GameControl : MonoBehaviour {
 	float currentHealth;
 	bool win = false;
 	bool lose = false;
+	bool levelStart = true;
 
 	PlayerControl player;
 
@@ -61,12 +63,29 @@ public class GameControl : MonoBehaviour {
 
 		endCanvas.SetActive(false);
 		openDoors.SetActive(false);
-		levelCam.enabled = false;
+	//	levelCam.enabled = false;
+		playerCam.enabled = false;
 		player = GameObject.FindWithTag("Player").GetComponent<PlayerControl>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(levelStart)
+		{
+			if(levelCam.enabled == true && camTimer < 2.5f)
+			{
+				camTimer += Time.deltaTime;
+			}
+			else if(levelCam.enabled == true && camTimer >= 2.5f)
+			{
+				playerCam.enabled = true;
+				levelCam.enabled = false;
+				levelStart = false;
+				tempLight.intensity = 0;
+				tempLight.enabled = false;
+			}
+		}
+
 		if(levelCam.enabled == true && camTimer < 2.5f)
 		{
 			camTimer += Time.deltaTime;
