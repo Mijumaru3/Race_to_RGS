@@ -39,6 +39,7 @@ public class GameControl : MonoBehaviour {
 	//private variables
 	float timer = 0.0f;
 	float camTimer = 0.0f;
+	float initialCamTime = 0.0f;
 	float currentHealth;
 	bool win = false;
 	bool lose = false;
@@ -71,16 +72,20 @@ public class GameControl : MonoBehaviour {
 	void Update () {
 		if(levelStart)
 		{
-			if(levelCam.enabled == true && camTimer < 6.0f)
+			if(levelCam.enabled == true && initialCamTime < 6.0f)
 			{
-				camTimer += Time.deltaTime;
+				initialCamTime += Time.deltaTime;
 			}
-			else if(levelCam.enabled == true && camTimer >= 6.0f)
+			else if(levelCam.enabled == true && initialCamTime >= 6.0f)
 			{
 				playerCam.enabled = true;
 				levelCam.enabled = false;
 				levelStart = false;
+<<<<<<< HEAD
                 camTimer = 0.0f;
+=======
+				initialCamTime = 0.0f;
+>>>>>>> origin/master
 			}
 		}
 
@@ -147,6 +152,7 @@ public class GameControl : MonoBehaviour {
 		openDoors.SetActive(true);
 		playerCam.enabled = false;
 		levelCam.enabled = true;
+		camTimer = 0.0f;
 	}
 
 	public void Pause()
