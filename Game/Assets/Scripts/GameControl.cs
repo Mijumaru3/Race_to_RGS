@@ -81,11 +81,7 @@ public class GameControl : MonoBehaviour {
 				playerCam.enabled = true;
 				levelCam.enabled = false;
 				levelStart = false;
-<<<<<<< HEAD
-                camTimer = 0.0f;
-=======
 				initialCamTime = 0.0f;
->>>>>>> origin/master
 			}
 		}
 
