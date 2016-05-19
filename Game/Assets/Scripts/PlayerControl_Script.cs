@@ -2,39 +2,51 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl_Script : MonoBehaviour {
 
+	//variables that have to do with movement speed
+	public float speed;  //speed of the player
+	public float maxSpeed = 5f;  //maximum speed of the player
+	Rigidbody2D rb;  //rigidbody of the player
+	float horiz = 0f;  //the value of the horizontal axis
 
-	//public variables
-	public float speed; //speed of the player
-	public float maxSpeed = 5f; //maximum speed of the player
-	public float jumpForce; //contorls how high the player will jump
+	//variables that have to do with jumping
+	public float jumpForce;  //contorls how high the player will jump
+	bool jump = false;  //whether the player is jumping or not
+	int numJumps= 0;  //how many jumps the player is allowed to have
+
+	//variables that have to do with the bullets
 	public float bulletSpeed = 4f;
-	public GameObject[] projectiles; //array of what the player can shoot
+	public GameObject[] projectiles;  //array of what the player can shoot
+	int proj_num = 0;  //decides which projectile to shoot from the array
 
+	//variables that have to do with knockback when running into enemeies
 	public float knockbackTime;
 	public float knockbackForce;
 	public float knockbackCount;
 	public bool knockbackFromRight;
 
-	//private variables
-	GameControl gc;
-	Rigidbody2D rb; //rigidbody of the player
-	float horiz = 0f; //the value of the horizontal axis
+	//variables that deal with the game controller
+	GameObject gameController;
+	GameControl_Script gc_s;
+	BulletTypeDisplay_Script btd_s;
+	Switch_Script sw_s;
 
-	bool jump = false; //whether the player is jumping or not
-	int numJumps= 0; //how many jumps the player is allowed to have
-	int proj_num = 0; //decides which projectile to shoot from the array
+	//other variables
 	float currentHealth;
-
-//	bool left = false; //whether the player is facing left or not
 
 	//===================================================================================================================================
 	//Unity Functions
 	// Use this for initialization
 	void Start () {
-		gc = GameObject.Find ("GameController").GetComponent<GameControl> ();
-		rb = GetComponent<Rigidbody2D> (); //get reference to the rigidbody of the player
+		//get different scripts of the game controller object
+		gameController = GameObject.Find ("GameController");
+		gc_s = gameController.GetComponent<GameControl_Script>();
+		btd_s = gameController.GetComponent<BulletTypeDisplay_Script>();
+		sw_s = gameController.GetComponent<Switch_Script>();
+
+		//get reference to the rigidbody of the player
+		rb = GetComponent<Rigidbody2D> (); 
 	}
 	
 	// Update is called once per frame
@@ -53,7 +65,7 @@ public class PlayerControl : MonoBehaviour {
 				proj_num = 0;  //then reset the proj_num to the beginning of the array
 			}
 
-			gc.changeBullet(projectiles.Length, proj_num);
+			btd_s.ChangeBulletImage(proj_num);
 		}
 
 		//---------------------------------------------------------------------------------------------------------------------------------
@@ -104,8 +116,8 @@ public class PlayerControl : MonoBehaviour {
 	{
 		//if the player hits the killzone then bring it back to the beginning position
 		if (col.gameObject.tag == "Killzone") {
-			gc.Respawn();
-			gc.changeHealth(10);
+			gc_s.Respawn();
+			gc_s.ChangeHealth(10);
 		}
 
 		//once the player lands numJumps is reset
@@ -114,12 +126,12 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		if (col.gameObject.tag == "Switch") {
-			gc.turnOn();
+			sw_s.TurnOn();
 		}
 
 		if(col.gameObject.tag == "Doors")
 		{
-			gc.reachDoors();
+			gc_s.ReachDoors();
 		}
 	}
 

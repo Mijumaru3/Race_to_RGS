@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class PauseScript : MonoBehaviour {
+public class Pause_Script : MonoBehaviour {
 
 	//public variables
 	public string startScreen;
@@ -61,7 +62,7 @@ public class PauseScript : MonoBehaviour {
 
 	public void ToStart()
 	{
-		Application.LoadLevel(startScreen);
+		SceneManager.LoadScene(startScreen);
 	}
 
 	public void ControlInfo()

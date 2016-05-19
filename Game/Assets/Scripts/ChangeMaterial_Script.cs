@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class ChangeMat : MonoBehaviour {
+public class ChangeMaterial_Script : MonoBehaviour {
 
 	/*For materials array:
 	 * 0 = rubber
@@ -36,7 +36,7 @@ public class ChangeMat : MonoBehaviour {
 	{
 		//if the game object that collides with the block's collider has the tag "bullet"
 		if (obj.gameObject.tag == "bullet") {
-			int type = obj.gameObject.GetComponent<BulletScript>().Type(); //get the type of the bullet
+			int type = obj.gameObject.GetComponent<Bullet_Script>().Type(); //get the type of the bullet
 			if(type < 3)
 			{
 				current = mats[type]; //set the variable current based on the type of the bullet

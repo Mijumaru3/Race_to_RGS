@@ -29,7 +29,7 @@ public class GameControl : MonoBehaviour {
 	public GameObject healthBar;
 	public float maxHealth = 100f; //amount of health the player has
 
-	public PauseScript ps;
+	public Pause_Script ps;
 
 	public Image loseImage;
 	public Image winImage;
@@ -45,7 +45,7 @@ public class GameControl : MonoBehaviour {
 	bool lose = false;
 	bool levelStart = true;
 
-	PlayerControl player;
+	PlayerControl_Script player;
 
 	//=============================================================================================================
 	//Unity provided functions
@@ -65,7 +65,7 @@ public class GameControl : MonoBehaviour {
 		endCanvas.SetActive(false);
 		openDoors.SetActive(false);
 		playerCam.enabled = false;
-		player = GameObject.FindWithTag("Player").GetComponent<PlayerControl>();
+		player = GameObject.FindWithTag("Player").GetComponent<PlayerControl_Script>();
 	}
 	
 	// Update is called once per frame
@@ -184,7 +184,7 @@ public class GameControl : MonoBehaviour {
 		UpdateText();
 	}
 
-	public void reachDoors()
+	public void ReachDoors()
 	{
 		win = true;
 	}
