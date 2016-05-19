@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DeleteParticles : MonoBehaviour {
+public class DeleteParticles_Script: MonoBehaviour {
 
 	ParticleSystem ps;
 

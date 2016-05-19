@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletScript : MonoBehaviour {
+public class Bullet_Script : MonoBehaviour {
 
 	/*For materials array:
 	 * 0 = rubber

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class TitleScreenScript : MonoBehaviour {
+public class TitleScreen_Script : MonoBehaviour {
 
 	//public variables
 	public GameObject controlMenuCanvas;
@@ -62,7 +63,8 @@ public class TitleScreenScript : MonoBehaviour {
 
 	public void StartGame()
 	{
-		Application.LoadLevel (firstLevel);
+		//Application.LoadLevel (firstLevel);
+		SceneManager.LoadScene(firstLevel);
 	}
 
 	public void QuitGame()
