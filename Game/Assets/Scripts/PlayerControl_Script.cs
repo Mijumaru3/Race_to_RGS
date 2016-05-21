@@ -100,6 +100,7 @@ public class PlayerControl_Script : MonoBehaviour {
 		}
 		else
 		{
+			//when the player collides with an enemy knock player back a bit (don't let player move during the time of knockback)
 			if(knockbackFromRight)
 			{
 				rb.velocity = new Vector2(-knockbackForce, 1f);
@@ -125,10 +126,12 @@ public class PlayerControl_Script : MonoBehaviour {
 			numJumps = 0;
 		}
 
+		//when player collides with the switch turn on the lights
 		if (col.gameObject.tag == "Switch") {
 			sw_s.TurnOn();
 		}
 
+		//when player collides with the open doors then the player has won
 		if(col.gameObject.tag == "Doors")
 		{
 			gc_s.ReachDoors();
@@ -140,10 +143,15 @@ public class PlayerControl_Script : MonoBehaviour {
 	//private function by default
 	void Shoot()
 	{
+		//find the mouse position and calculate direction to shoot in baesd on that
 		Vector3 target = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 		Vector3 direction = target - transform.position;
 		direction.Normalize ();
+
+		//store the place at which to spawn the bullet
 		Vector3 playerPos = new Vector3 (transform.position.x + (direction.x), transform.position.y + (direction.y), transform.position.z);
+
+		//create the bullet and give it the proper direction to go in and a speed
 		GameObject bullet = (GameObject)Instantiate (projectiles [proj_num], playerPos, Quaternion.identity);
 		bullet.GetComponent<Rigidbody2D> ().velocity = direction * bulletSpeed;
 	}
