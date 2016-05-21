@@ -1,0 +1,35 @@
+Style Guide for Code & Naming Conventions:
+
+-a script will be divided into three parts: 
+       variables at the top, grouped by their use
+       functions that are defined by Unity
+       functions have been created
+  the three parts will be divided by a comment of a line of equal signs (=) and a line comment of which part it is
+-the created functions section will have two parts:
+       public functions
+       private functions
+  the three parts will be divided by a comment of a line of minus signs (-) and a line comment on which part it is
+
+-variable names will begin with a lower case letter and if they are longer than one word then each subsequent
+ word will have the first letter capitalized (no spaces or underscores between the words)
+ examples: 
+          one word name: player
+          multi-word name: aVariableName
+  the same rule for variables also applies to function parameters
+  
+-function names will begin with an upper case letter and if longer than one word then each subsequen word will
+ have the first letter capitalized (no spaces or underscores between the words)
+ examples:
+          one word name: void function()
+          multi-word name: void NameOfFunction()
+        
+-names of scripts will be similar to function names except that they will end with: _Script
+ examples:
+          one word name: Player_Script
+          multi-word name: BulletDisplay_Script
+-names of materials will be similar to functions except that they will end with: _mat
+ examples:
+          one word name: Background_mat
+          multi-word name: RubberEnemy_mat
+  
+  
