@@ -3,7 +3,11 @@ using System.Collections;
 
 public class DeleteParticles_Script: MonoBehaviour {
 
+	//variables that deal with the particle system
 	ParticleSystem ps;
+
+	//=============================================================================================================================
+	//Unity defined functions
 
 	// Use this for initialization
 	void Start () {
