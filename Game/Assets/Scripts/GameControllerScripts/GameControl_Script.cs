@@ -46,6 +46,7 @@ public class GameControl_Script : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindWithTag("Player").GetComponent<PlayerControl_Script>();
 		currentHealth = maxHealth;
+		endCanvas.SetActive(false);
 	}
 	
 	// Update is called once per frame
