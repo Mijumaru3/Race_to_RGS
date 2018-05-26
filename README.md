@@ -15,3 +15,6 @@ Bullets:
 Controls:
 Can switch between material bullets by clicking right mouse button, shoot with the left mouse button
 
+
+Re-vamp:
+This game will be remade from 2d into 3d.
